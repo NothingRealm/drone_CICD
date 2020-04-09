@@ -1,0 +1,26 @@
+kind: pipeline
+name: default
+steps:
+    - name: test
+      image: golang:1.10-alpine
+      commands:
+          - "go test"
+    - name: build
+      image: golang:1.10-alpine
+      commands:
+          - "go build -o ./myapp"
+    - name: publish
+      image: plugins/docker
+      settings:
+          repo: nothingrealm/drone
+          tags: [ latest, 1.0, 1 ]
+          username:
+              from_secret: docker_username
+          password:
+              from_secret: docker_password
+    - name: deliver
+      image: vallard/drone-kube
+      setting:
+          template: service_and_deployment.yml
+      when:
+          event: [ push ]
