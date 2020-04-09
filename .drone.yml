@@ -24,3 +24,8 @@ steps:
           template: service_and_deployment.yml
       when:
           event: [ push ]
+trigger:
+    branch:
+        - master
+    event:
+        - push
