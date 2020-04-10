@@ -23,6 +23,7 @@ steps:
       image: vallard/drone-kube
       setting:
           template: service_and_deployment.yml
+      server: 192.168.39.86:8443
       when:
           event: [ push ]
 trigger:
