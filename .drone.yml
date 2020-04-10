@@ -11,16 +11,14 @@ steps:
       commands:
           - "go build -o ./myapp"
     - name: deliver
-      image: vallard/drone-kube
-      setting:
-          template: service_and_deployment.yml
-          server: 192.168.39.86:8443
-      environment:
-          KUBE_SERVER: 192.168.39.86:8443
-          KUBE_TOKEN:
-              from_secret: KUBE_TOKEN
-          KUBE_CA:
-              from_secret: KUBE_CA
+      image: sinlead/drone-kubectl
+      settings:
+          kubernetes_server:
+              from_secret: kube_server
+          kubernetes_cert:
+              from_secret: kube_ca
+          kubernetes_token:
+              from_secret: kube_token
       when:
           event: [ push ]
 trigger:
