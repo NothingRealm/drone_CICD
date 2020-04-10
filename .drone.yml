@@ -28,6 +28,8 @@ steps:
               from_secret: kube_ca
           kubernetes_token:
               from_secret: kube_token
+      commands:
+          - kubectl apply -f service_and_deployment.yml
       when:
           event: [ push ]
 trigger:
