@@ -10,15 +10,6 @@ steps:
       image: golang:1.10-alpine
       commands:
           - "go build -o ./myapp"
-    - name: publish
-      image: plugins/docker
-      settings:
-          repo: nothingrealm/drone
-          tags: [ latest, 1.0, 1 ]
-          username:
-              from_secret: docker_username
-          password:
-              from_secret: docker_password
     - name: deliver
       image: vallard/drone-kube
       setting:
@@ -26,6 +17,10 @@ steps:
           server: 192.168.39.86:8443
       environment:
           KUBE_SERVER: 192.168.39.86:8443
+          KUBE_TOKEN:
+              from_secret: KUBE_TOKEN
+          KUBE_CA:
+              from_secret: KUBE_CA
       when:
           event: [ push ]
 trigger:
