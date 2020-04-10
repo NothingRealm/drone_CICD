@@ -4,7 +4,7 @@ metadata:
     name: drone-svc
 spec:
     type: NodePort
-    selcetor:
+    selector:
         app: drone
     ports:
         - protocol: TCP
@@ -19,16 +19,17 @@ metadata:
 spec:
     replicas: 2
     selector:
-        matchLabel:
+        matchLabels:
             app: drone
     template:
         metadata:
             labels:
                 app: drone
-        containers:
-            - name: server
-              image: "nothingrealm/drone"
-              resources:
-                  requests:
+        spec:
+            containers:
+              - name: server
+                image: "nothingrealm/drone"
+                resources:
+                    requests:
                       cpu: 10m
                       memory: 128Mi
